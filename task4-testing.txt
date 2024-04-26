@@ -1,0 +1,510 @@
+Test with another instance already running:
+
+alexandra@alexandra-X542URR:~$ ./up.sh
+alexandra@alexandra-X542URR:~$ tail -n 50 /var/log/syslog
+Apr 26 17:29:21 alexandra-X542URR systemd[2138]: Started Application launched by gnome-shell.
+Apr 26 17:29:21 alexandra-X542URR dbus-daemon[2173]: [session uid=1000 pid=2173] Activating via systemd: service name='org.gnome.Terminal' unit='gnome-terminal-server.service' requested by ':1.106' (uid=1000 pid=3911 comm="/usr/bin/gnome-terminal.real " label="unconfined")
+Apr 26 17:29:21 alexandra-X542URR systemd[2138]: Starting GNOME Terminal Server...
+Apr 26 17:29:21 alexandra-X542URR dbus-daemon[2173]: [session uid=1000 pid=2173] Successfully activated service 'org.gnome.Terminal'
+Apr 26 17:29:21 alexandra-X542URR systemd[2138]: Started GNOME Terminal Server.
+Apr 26 17:29:21 alexandra-X542URR systemd[2138]: Started VTE child process 3936 launched by gnome-terminal-server process 3914.
+Apr 26 17:29:30 alexandra-X542URR systemd[2138]: Started VTE child process 3943 launched by gnome-terminal-server process 3914.
+Apr 26 17:29:36 alexandra-X542URR up: Script started.
+Apr 26 17:29:36 alexandra-X542URR up: Checking network connectivity...
+Apr 26 17:29:36 alexandra-X542URR up: Network is up.
+Apr 26 17:29:36 alexandra-X542URR up: Updating package lists...
+Apr 26 17:29:36 alexandra-X542URR systemd[1]: Starting Update APT News...
+Apr 26 17:29:36 alexandra-X542URR systemd[1]: Starting Update the local ESM caches...
+Apr 26 17:29:37 alexandra-X542URR systemd[1]: apt-news.service: Deactivated successfully.
+Apr 26 17:29:37 alexandra-X542URR systemd[1]: Finished Update APT News.
+Apr 26 17:29:37 alexandra-X542URR systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Apr 26 17:29:38 alexandra-X542URR systemd[1]: esm-cache.service: Deactivated successfully.
+Apr 26 17:29:38 alexandra-X542URR systemd[1]: Finished Update the local ESM caches.
+Apr 26 17:29:39 alexandra-X542URR up: Script started.
+Apr 26 17:29:39 alexandra-X542URR up: Another instance of the script is already running.
+
+
+Test without network connectivity:
+
+alexandra@alexandra-X542URR:~$ ./up.sh
+alexandra@alexandra-X542URR:~$ tail -n 20 /var/log/syslog
+Apr 23 18:37:33 alexandra-X542URR up: Script started.
+Apr 23 18:37:33 alexandra-X542URR up: Checking network connectivity...
+Apr 23 18:37:33 alexandra-X542URR up: Network is down.
+Apr 23 18:37:43 alexandra-X542URR up: message repeated 2 times: [ Network is down.]
+Apr 23 18:37:48 alexandra-X542URR up: No network connectivity after 15 seconds.
+Apr 23 18:37:48 alexandra-X542URR up: No network connectivity. Update cancelled.
+
+
+Test without mirrors present:
+
+alexandra@alexandra-X542URR:~$ ./up.sh
+Get:1 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:2 https://download.docker.com/linux/ubuntu jammy InRelease [48,8 kB]       
+Hit:3 http://ro.archive.ubuntu.com/ubuntu jammy InRelease                      
+Get:4 https://packages.microsoft.com/repos/code stable InRelease [3.590 B]     
+Get:5 http://ro.archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]     
+Get:6 http://ro.archive.ubuntu.com/ubuntu jammy-backports InRelease [109 kB]
+Get:7 https://packages.microsoft.com/repos/code stable/main amd64 Packages [17,1 kB]
+Get:8 https://packages.microsoft.com/repos/code stable/main arm64 Packages [17,8 kB]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1.394 kB]
+Get:10 https://packages.microsoft.com/repos/code stable/main armhf Packages [17,7 kB]
+Get:11 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main i386 Packages [619 kB]
+Get:12 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [1.610 kB]
+Get:13 http://security.ubuntu.com/ubuntu jammy-security/main i386 Packages [452 kB]
+Get:14 http://ro.archive.ubuntu.com/ubuntu jammy-updates/universe i386 Packages [700 kB]
+Get:15 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [243 kB]
+Get:16 http://ro.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1.070 kB]
+Get:17 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [1.773 kB]
+Get:18 http://ro.archive.ubuntu.com/ubuntu jammy-backports/main i386 Packages [59,3 kB]
+Get:19 http://ro.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67,1 kB]
+Get:20 http://ro.archive.ubuntu.com/ubuntu jammy-backports/universe i386 Packages [16,0 kB]
+Get:21 http://ro.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [27,2 kB]
+Get:22 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [300 kB]
+Get:23 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [848 kB]
+Get:24 http://security.ubuntu.com/ubuntu jammy-security/universe i386 Packages [601 kB]
+Fetched 10,2 MB in 6s (1.739 kB/s)                         
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+11 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+Get more security updates through Ubuntu Pro with 'esm-apps' enabled:
+  libpostproc55 libavcodec58 libavutil56 python3-git libswscale5
+  libswresample3 libavformat58 libavfilter7
+Learn more about Ubuntu Pro at https://ubuntu.com/pro
+The following packages have been kept back:
+  python3-update-manager update-manager update-manager-core
+The following packages will be upgraded:
+  libfreerdp-client2-2 libfreerdp-server2-2 libfreerdp2-2 libwinpr2-2
+  thunderbird thunderbird-gnome-support thunderbird-locale-en
+  thunderbird-locale-en-us
+8 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+8 standard LTS security updates
+Need to get 69,7 MB of archives.
+After this operation, 84,0 kB of additional disk space will be used.
+Get:1 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libfreerdp-client2-2 amd64 2.6.1+dfsg1-3ubuntu2.6 [284 kB]
+Get:2 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libfreerdp-server2-2 amd64 2.6.1+dfsg1-3ubuntu2.6 [100 kB]
+Get:3 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libfreerdp2-2 amd64 2.6.1+dfsg1-3ubuntu2.6 [564 kB]
+Get:4 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwinpr2-2 amd64 2.6.1+dfsg1-3ubuntu2.6 [355 kB]
+Get:5 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 thunderbird-locale-en amd64 1:115.10.1+build1-0ubuntu0.22.04.1 [1.019 kB]
+Get:6 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 thunderbird amd64 1:115.10.1+build1-0ubuntu0.22.04.1 [67,4 MB]
+Get:7 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 thunderbird-gnome-support amd64 1:115.10.1+build1-0ubuntu0.22.04.1 [8.630 B]
+Get:8 http://ro.archive.ubuntu.com/ubuntu jammy-updates/main amd64 thunderbird-locale-en-us all 1:115.10.1+build1-0ubuntu0.22.04.1 [9.524 B]
+Fetched 69,7 MB in 17s (4.009 kB/s)                                            
+(Reading database ... 224279 files and directories currently installed.)
+Preparing to unpack .../0-libfreerdp-client2-2_2.6.1+dfsg1-3ubuntu2.6_amd64.deb 
+...
+Unpacking libfreerdp-client2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) over (2.6.1+dfsg1-
+3ubuntu2.5) ...
+Preparing to unpack .../1-libfreerdp-server2-2_2.6.1+dfsg1-3ubuntu2.6_amd64.deb 
+...
+Unpacking libfreerdp-server2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) over (2.6.1+dfsg1-
+3ubuntu2.5) ...
+Preparing to unpack .../2-libfreerdp2-2_2.6.1+dfsg1-3ubuntu2.6_amd64.deb ...
+Unpacking libfreerdp2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) over (2.6.1+dfsg1-3ubuntu
+2.5) ...
+Preparing to unpack .../3-libwinpr2-2_2.6.1+dfsg1-3ubuntu2.6_amd64.deb ...
+Unpacking libwinpr2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) over (2.6.1+dfsg1-3ubuntu2.
+5) ...
+Preparing to unpack .../4-thunderbird-locale-en_1%3a115.10.1+build1-0ubuntu0.22.
+04.1_amd64.deb ...
+Unpacking thunderbird-locale-en (1:115.10.1+build1-0ubuntu0.22.04.1) over (1:115
+.9.0+build1-0ubuntu0.22.04.1) ...
+Preparing to unpack .../5-thunderbird_1%3a115.10.1+build1-0ubuntu0.22.04.1_amd64
+.deb ...
+Unpacking thunderbird (1:115.10.1+build1-0ubuntu0.22.04.1) over (1:115.9.0+build
+1-0ubuntu0.22.04.1) ...
+Preparing to unpack .../6-thunderbird-gnome-support_1%3a115.10.1+build1-0ubuntu0
+.22.04.1_amd64.deb ...
+Unpacking thunderbird-gnome-support (1:115.10.1+build1-0ubuntu0.22.04.1) over (1
+:115.9.0+build1-0ubuntu0.22.04.1) ...
+Preparing to unpack .../7-thunderbird-locale-en-us_1%3a115.10.1+build1-0ubuntu0.
+22.04.1_all.deb ...
+Unpacking thunderbird-locale-en-us (1:115.10.1+build1-0ubuntu0.22.04.1) over (1:
+115.9.0+build1-0ubuntu0.22.04.1) ...
+Setting up libwinpr2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) ...
+Setting up thunderbird (1:115.10.1+build1-0ubuntu0.22.04.1) ...
+Setting up libfreerdp2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) ...
+Setting up thunderbird-locale-en (1:115.10.1+build1-0ubuntu0.22.04.1) ...
+Setting up thunderbird-locale-en-us (1:115.10.1+build1-0ubuntu0.22.04.1) ...
+Setting up thunderbird-gnome-support (1:115.10.1+build1-0ubuntu0.22.04.1) ...
+Setting up libfreerdp-server2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) ...
+Setting up libfreerdp-client2-2:amd64 (2.6.1+dfsg1-3ubuntu2.6) ...
+Processing triggers for hicolor-icon-theme (0.17-2) ...
+Processing triggers for gnome-menus (3.36.0-1ubuntu3) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.7) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for mailcap (3.70+nmu1ubuntu1) ...
+Processing triggers for desktop-file-utils (0.26-1ubuntu3) ...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+Cloning into bare repository 'linux'...
+remote: Enumerating objects: 10990211, done.
+remote: Counting objects: 100% (115/115), done.
+remote: Compressing objects: 100% (95/95), done.
+remote: Total 10990211 (delta 47), reused 70 (delta 20), pack-reused 10990096
+Receiving objects: 100% (10990211/10990211), 5.78 GiB | 7.06 MiB/s, done.
+Resolving deltas: 100% (8901559/8901559), done.
+Fetching origin
+Cloning into bare repository 'glibc'...
+remote: Enumerating objects: 721432, done.
+remote: Counting objects: 100% (32485/32485), done.
+remote: Compressing objects: 100% (7884/7884), done.
+remote: Total 721432 (delta 24518), reused 30502 (delta 23995), pack-reused 688947
+Receiving objects: 100% (721432/721432), 274.31 MiB | 5.70 MiB/s, done.
+Resolving deltas: 100% (613558/613558), done.
+Fetching origin
+alexandra@alexandra-X542URR:~$ tail -n 400 /var/log/syslog
+Apr 25 15:58:18 alexandra-X542URR up: Script started.
+Apr 25 15:58:18 alexandra-X542URR up: Checking network connectivity...
+Apr 25 15:58:19 alexandra-X542URR up: Network is up.
+Apr 25 15:58:19 alexandra-X542URR up: Updating package lists...
+Apr 25 15:58:19 alexandra-X542URR systemd[1]: Starting Update APT News...
+Apr 25 15:58:19 alexandra-X542URR systemd[1]: Starting Update the local ESM caches...
+Apr 25 15:58:22 alexandra-X542URR systemd[1]: esm-cache.service: Deactivated successfully.
+Apr 25 15:58:22 alexandra-X542URR systemd[1]: Finished Update the local ESM caches.
+Apr 25 15:58:24 alexandra-X542URR kernel: [  138.187054] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 15:58:24 alexandra-X542URR kernel: [  138.187065] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 15:58:24 alexandra-X542URR kernel: [  138.187067] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 15:58:24 alexandra-X542URR kernel: [  138.187070] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 15:58:24 alexandra-X542URR kernel: [  138.187072] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:58:29 alexandra-X542URR systemd[1]: systemd-localed.service: Deactivated successfully.
+Apr 25 15:58:29 alexandra-X542URR systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Apr 25 15:58:29 alexandra-X542URR systemd[1]: apt-news.service: Deactivated successfully.
+Apr 25 15:58:29 alexandra-X542URR systemd[1]: Finished Update APT News.
+Apr 25 15:58:30 alexandra-X542URR geoclue[1867]: Service not used for 60 seconds. Shutting down..
+Apr 25 15:58:30 alexandra-X542URR systemd[1]: geoclue.service: Deactivated successfully.
+Apr 25 15:58:32 alexandra-X542URR up: exit code 0
+Apr 25 15:58:32 alexandra-X542URR up: Upgrading installed packages...
+Apr 25 15:58:34 alexandra-X542URR kernel: [  147.945759] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 15:58:34 alexandra-X542URR kernel: [  147.945771] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 15:58:34 alexandra-X542URR kernel: [  147.945773] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 15:58:34 alexandra-X542URR kernel: [  147.945775] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 15:58:34 alexandra-X542URR kernel: [  147.945777] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:58:59 alexandra-X542URR systemd[2099]: Started Application launched by gnome-session-binary.
+Apr 25 15:58:59 alexandra-X542URR systemd[2099]: Started Application launched by gnome-session-binary.
+Apr 25 15:59:03 alexandra-X542URR update-notifier.desktop[3825]: /var/lib/dpkg/lock:
+Apr 25 15:59:03 alexandra-X542URR ubuntu-appindicators@ubuntu.com[2512]: unable to update icon for software-update-available
+Apr 25 15:59:03 alexandra-X542URR ubuntu-appindicators@ubuntu.com[2512]: unable to update icon for livepatch
+Apr 25 15:59:06 alexandra-X542URR dbus-daemon[2133]: [session uid=1000 pid=2133] Activating via systemd: service name='org.freedesktop.Tracker3.Miner.Extract' unit='tracker-extract-3.service' requested by ':1.86' (uid=1000 pid=2945 comm="/usr/libexec/tracker-miner-fs-3 " label="unconfined")
+Apr 25 15:59:06 alexandra-X542URR systemd[2099]: Starting Tracker metadata extractor...
+Apr 25 15:59:07 alexandra-X542URR dbus-daemon[2133]: [session uid=1000 pid=2133] Successfully activated service 'org.freedesktop.Tracker3.Miner.Extract'
+Apr 25 15:59:07 alexandra-X542URR systemd[2099]: Started Tracker metadata extractor.
+Apr 25 15:59:07 alexandra-X542URR tracker-extract[3835]: Could not get mimetype, Error when getting information for file “/usr/share/applications/thunderbird.desktop.dpkg-new”: No such file or directory
+Apr 25 15:59:16 alexandra-X542URR tracker-extract[3835]: Task for 'file:///usr/share/applications/thunderbird.desktop.dpkg-new' finished with error: Error when getting information for file “/usr/share/applications/thunderbird.desktop.dpkg-new”: No such file or directory
+Apr 25 15:59:16 alexandra-X542URR tracker-extract[3835]: Could not get mimetype, Error when getting information for file “/usr/share/applications/thunderbird.desktop.dpkg-tmp”: No such file or directory
+Apr 25 15:59:16 alexandra-X542URR tracker-extract[3835]: Task for 'file:///usr/share/applications/thunderbird.desktop.dpkg-tmp' finished with error: Error when getting information for file “/usr/share/applications/thunderbird.desktop.dpkg-tmp”: No such file or directory
+Apr 25 15:59:18 alexandra-X542URR up: exit code 0
+Apr 25 15:59:18 alexandra-X542URR up: Cleaning up...
+Apr 25 15:59:18 alexandra-X542URR up: exit code 0
+Apr 25 15:59:18 alexandra-X542URR up: Cloning repository...
+Apr 25 15:59:32 alexandra-X542URR kernel: [  206.179884] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 15:59:32 alexandra-X542URR kernel: [  206.179899] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 15:59:32 alexandra-X542URR kernel: [  206.179901] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 15:59:32 alexandra-X542URR kernel: [  206.179903] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:59:35 alexandra-X542URR kernel: [  209.619216] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 15:59:35 alexandra-X542URR kernel: [  209.619228] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 15:59:35 alexandra-X542URR kernel: [  209.619230] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 15:59:35 alexandra-X542URR kernel: [  209.619233] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 15:59:35 alexandra-X542URR kernel: [  209.619235] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:59:35 alexandra-X542URR kernel: [  209.619236] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 15:59:41 alexandra-X542URR kernel: [  214.793313] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 15:59:41 alexandra-X542URR kernel: [  214.793336] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 15:59:41 alexandra-X542URR kernel: [  214.793340] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 15:59:41 alexandra-X542URR kernel: [  214.793342] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 15:59:41 alexandra-X542URR kernel: [  214.793344] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:59:48 alexandra-X542URR kernel: [  222.416466] pcieport 0000:00:1c.5: AER: Corrected error received: 0000:03:00.0
+Apr 25 15:59:48 alexandra-X542URR kernel: [  222.416477] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 15:59:48 alexandra-X542URR kernel: [  222.416479] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 15:59:48 alexandra-X542URR kernel: [  222.416482] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:59:53 alexandra-X542URR kernel: [  227.372784] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 15:59:53 alexandra-X542URR kernel: [  227.372798] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 15:59:53 alexandra-X542URR kernel: [  227.372800] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 15:59:53 alexandra-X542URR kernel: [  227.372803] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 15:59:53 alexandra-X542URR kernel: [  227.372805] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 15:59:59 alexandra-X542URR systemd[2099]: Started Application launched by gnome-session-binary.
+Apr 25 16:00:04 alexandra-X542URR kernel: [  238.037517] pcieport 0000:00:1c.5: AER: Corrected error received: 0000:03:00.0
+Apr 25 16:00:04 alexandra-X542URR kernel: [  238.037527] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:00:04 alexandra-X542URR kernel: [  238.037529] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000001/00006000
+Apr 25 16:00:04 alexandra-X542URR kernel: [  238.037531] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:00:10 alexandra-X542URR kernel: [  244.596021] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:00:10 alexandra-X542URR kernel: [  244.596033] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 16:00:10 alexandra-X542URR kernel: [  244.596035] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 16:00:10 alexandra-X542URR kernel: [  244.596038] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:00:10 alexandra-X542URR kernel: [  244.596040] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:00:10 alexandra-X542URR kernel: [  244.596042] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:00:36 alexandra-X542URR kernel: [  270.088683] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:00:36 alexandra-X542URR kernel: [  270.088698] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:00:36 alexandra-X542URR kernel: [  270.088701] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:00:36 alexandra-X542URR kernel: [  270.088703] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:00:38 alexandra-X542URR kernel: [  271.676587] pcieport 0000:00:1c.5: AER: Corrected error received: 0000:03:00.0
+Apr 25 16:00:38 alexandra-X542URR kernel: [  271.676597] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:00:38 alexandra-X542URR kernel: [  271.676599] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:00:38 alexandra-X542URR kernel: [  271.676602] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:00:38 alexandra-X542URR kernel: [  271.676604] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:07 alexandra-X542URR kernel: [  300.679200] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:07 alexandra-X542URR kernel: [  300.679212] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 16:01:07 alexandra-X542URR kernel: [  300.679214] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 16:01:07 alexandra-X542URR kernel: [  300.679217] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:01:07 alexandra-X542URR kernel: [  300.679219] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:07 alexandra-X542URR kernel: [  300.679220] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:01:17 alexandra-X542URR kernel: [  311.023250] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:17 alexandra-X542URR kernel: [  311.023261] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:01:17 alexandra-X542URR kernel: [  311.023263] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:01:17 alexandra-X542URR kernel: [  311.023266] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:17 alexandra-X542URR kernel: [  311.023268] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.040835] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.040850] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.040852] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.040855] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.040857] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.067484] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.067495] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.067497] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.067500] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:01:18 alexandra-X542URR kernel: [  312.067502] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:22 alexandra-X542URR kernel: [  316.229524] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:22 alexandra-X542URR kernel: [  316.229535] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:01:22 alexandra-X542URR kernel: [  316.229538] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:01:22 alexandra-X542URR kernel: [  316.229540] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:31 alexandra-X542URR anacron[903]: Job `cron.daily' started
+Apr 25 16:01:31 alexandra-X542URR anacron[3985]: Updated timestamp for job `cron.daily' to 2024-04-25
+Apr 25 16:01:31 alexandra-X542URR systemd[1]: Starting Download data for packages that failed at package install time...
+Apr 25 16:01:32 alexandra-X542URR cracklib: no dictionary update necessary.
+Apr 25 16:01:32 alexandra-X542URR anacron[903]: Job `cron.daily' terminated
+Apr 25 16:01:32 alexandra-X542URR anacron[903]: Normal exit (1 job run)
+Apr 25 16:01:32 alexandra-X542URR systemd[1]: anacron.service: Deactivated successfully.
+Apr 25 16:01:32 alexandra-X542URR systemd[1]: update-notifier-download.service: Deactivated successfully.
+Apr 25 16:01:32 alexandra-X542URR systemd[1]: Finished Download data for packages that failed at package install time.
+Apr 25 16:01:32 alexandra-X542URR kernel: [  326.597628] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:32 alexandra-X542URR kernel: [  326.597640] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 16:01:32 alexandra-X542URR kernel: [  326.597642] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 16:01:32 alexandra-X542URR kernel: [  326.597645] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:01:32 alexandra-X542URR kernel: [  326.597647] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:32 alexandra-X542URR kernel: [  326.597648] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:01:43 alexandra-X542URR kernel: [  337.436637] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:01:43 alexandra-X542URR kernel: [  337.436650] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:01:43 alexandra-X542URR kernel: [  337.436652] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:01:43 alexandra-X542URR kernel: [  337.436654] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:01:43 alexandra-X542URR kernel: [  337.436656] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:01:55 alexandra-X542URR dbus-daemon[908]: [system] Activating via systemd: service name='org.freedesktop.timedate1' unit='dbus-org.freedesktop.timedate1.service' requested by ':1.28' (uid=0 pid=938 comm="/usr/lib/snapd/snapd " label="unconfined")
+Apr 25 16:01:55 alexandra-X542URR systemd[1]: Starting Time & Date Service...
+Apr 25 16:01:55 alexandra-X542URR dbus-daemon[908]: [system] Successfully activated service 'org.freedesktop.timedate1'
+Apr 25 16:01:55 alexandra-X542URR systemd[1]: Started Time & Date Service.
+Apr 25 16:01:57 alexandra-X542URR snapd[938]: storehelpers.go:791: cannot refresh: snap has no updates available: "bare", "core", "firefox", "gtk-common-themes", "notepadqq", "snap-store", "snapd", "snapd-desktop-integration"
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: Reloading.
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: Starting Daily apt upgrade and clean activities...
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: Starting Podman auto-update service...
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: Mounting Mount unit for core22, revision 1380...
+Apr 25 16:02:10 alexandra-X542URR kernel: [  364.335392] loop12: detected capacity change from 0 to 152040
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: Mounted Mount unit for core22, revision 1380.
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: var-lib-containers-storage-overlay.mount: Deactivated successfully.
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: var-lib-containers-storage-overlay.mount: Deactivated successfully.
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: podman-auto-update.service: Deactivated successfully.
+Apr 25 16:02:10 alexandra-X542URR systemd[1]: Finished Podman auto-update service.
+Apr 25 16:02:12 alexandra-X542URR systemd[1]: apt-daily-upgrade.service: Deactivated successfully.
+Apr 25 16:02:12 alexandra-X542URR systemd[1]: Finished Daily apt upgrade and clean activities.
+Apr 25 16:02:24 alexandra-X542URR kernel: [  378.595742] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:02:24 alexandra-X542URR kernel: [  378.595754] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:02:24 alexandra-X542URR kernel: [  378.595757] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:02:24 alexandra-X542URR kernel: [  378.595759] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:02:25 alexandra-X542URR systemd[1]: systemd-timedated.service: Deactivated successfully.
+Apr 25 16:02:44 alexandra-X542URR kernel: [  398.148023] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:02:44 alexandra-X542URR kernel: [  398.148035] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:02:44 alexandra-X542URR kernel: [  398.148037] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:02:44 alexandra-X542URR kernel: [  398.148039] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:02:44 alexandra-X542URR kernel: [  398.148041] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:03:09 alexandra-X542URR kernel: [  423.616599] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:03:09 alexandra-X542URR kernel: [  423.616611] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:03:09 alexandra-X542URR kernel: [  423.616614] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:03:09 alexandra-X542URR kernel: [  423.616616] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:03:11 alexandra-X542URR systemd[1]: Reloading.
+Apr 25 16:03:11 alexandra-X542URR systemd[1]: Mounting Mount unit for gnome-42-2204, revision 176...
+Apr 25 16:03:11 alexandra-X542URR kernel: [  425.455359] loop13: detected capacity change from 0 to 1034424
+Apr 25 16:03:11 alexandra-X542URR systemd[1]: Mounted Mount unit for gnome-42-2204, revision 176.
+Apr 25 16:03:18 alexandra-X542URR kernel: [  431.842705] audit: type=1400 audit(1714050198.155:64): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firefox.hook.configure" pid=4422 comm="apparmor_parser"
+Apr 25 16:03:18 alexandra-X542URR kernel: [  431.854309] audit: type=1400 audit(1714050198.167:65): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firefox.hook.disconnect-plug-host-hunspell" pid=4424 comm="apparmor_parser"
+Apr 25 16:03:18 alexandra-X542URR kernel: [  431.881497] audit: type=1400 audit(1714050198.195:66): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firefox.hook.connect-plug-host-hunspell" pid=4423 comm="apparmor_parser"
+Apr 25 16:03:18 alexandra-X542URR kernel: [  432.240359] audit: type=1400 audit(1714050198.551:67): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firefox.hook.post-refresh" pid=4425 comm="apparmor_parser"
+Apr 25 16:03:18 alexandra-X542URR kernel: [  432.449829] audit: type=1400 audit(1714050198.763:68): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.snap-store.hook.configure" pid=4427 comm="apparmor_parser"
+Apr 25 16:03:19 alexandra-X542URR kernel: [  433.354287] audit: type=1400 audit(1714050199.667:69): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.snap-store.ubuntu-software" pid=4429 comm="apparmor_parser"
+Apr 25 16:03:20 alexandra-X542URR kernel: [  433.775249] audit: type=1400 audit(1714050200.087:70): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firefox.geckodriver" pid=4421 comm="apparmor_parser"
+Apr 25 16:03:20 alexandra-X542URR kernel: [  433.790380] audit: type=1400 audit(1714050200.103:71): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.snap-store.snap-store" pid=4428 comm="apparmor_parser"
+Apr 25 16:03:20 alexandra-X542URR kernel: [  433.791217] audit: type=1400 audit(1714050200.103:72): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="snap.firefox.firefox" pid=4420 comm="apparmor_parser"
+Apr 25 16:03:20 alexandra-X542URR kernel: [  434.146223] audit: type=1400 audit(1714050200.459:73): apparmor="STATUS" operation="profile_replace" info="same as current profile, skipping" profile="unconfined" name="snap-update-ns.firefox" pid=4419 comm="apparmor_parser"
+Apr 25 16:03:25 alexandra-X542URR snapd[938]: storehelpers.go:791: cannot refresh: snap has no updates available: "core22", "gnome-42-2204"
+Apr 25 16:03:25 alexandra-X542URR wpa_supplicant[943]: wlp3s0: CTRL-EVENT-SIGNAL-CHANGE above=1 signal=-40 noise=-97 txrate=6000
+Apr 25 16:04:09 alexandra-X542URR kernel: [  483.304869] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:04:09 alexandra-X542URR kernel: [  483.304881] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:04:09 alexandra-X542URR kernel: [  483.304883] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:04:09 alexandra-X542URR kernel: [  483.304885] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:05:30 alexandra-X542URR kernel: [  563.808639] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:05:30 alexandra-X542URR kernel: [  563.808650] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:05:30 alexandra-X542URR kernel: [  563.808652] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:05:30 alexandra-X542URR kernel: [  563.808655] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:05:30 alexandra-X542URR kernel: [  563.808657] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:05:33 alexandra-X542URR kernel: [  567.294259] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:05:33 alexandra-X542URR kernel: [  567.294270] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:05:33 alexandra-X542URR kernel: [  567.294273] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:05:33 alexandra-X542URR kernel: [  567.294275] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:05:33 alexandra-X542URR kernel: [  567.294277] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:06:10 alexandra-X542URR kernel: [  603.881116] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:06:10 alexandra-X542URR kernel: [  603.881128] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 16:06:10 alexandra-X542URR kernel: [  603.881130] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 16:06:10 alexandra-X542URR kernel: [  603.881133] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:06:10 alexandra-X542URR kernel: [  603.881135] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:06:10 alexandra-X542URR kernel: [  603.881136] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:06:57 alexandra-X542URR kernel: [  651.055197] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:06:57 alexandra-X542URR kernel: [  651.055213] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:06:57 alexandra-X542URR kernel: [  651.055216] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:06:57 alexandra-X542URR kernel: [  651.055218] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:08:15 alexandra-X542URR kernel: [  729.555384] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:08:15 alexandra-X542URR kernel: [  729.555396] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:08:15 alexandra-X542URR kernel: [  729.555399] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:08:15 alexandra-X542URR kernel: [  729.555401] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:08:29 alexandra-X542URR kernel: [  742.943077] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:08:29 alexandra-X542URR kernel: [  742.943089] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:08:29 alexandra-X542URR kernel: [  742.943091] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:08:29 alexandra-X542URR kernel: [  742.943093] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:08:29 alexandra-X542URR kernel: [  742.943095] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:08:36 alexandra-X542URR kernel: [  749.835750] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:08:36 alexandra-X542URR kernel: [  749.835764] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:08:36 alexandra-X542URR kernel: [  749.835766] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:08:36 alexandra-X542URR kernel: [  749.835769] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:08:36 alexandra-X542URR kernel: [  749.835771] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:08:39 alexandra-X542URR kernel: [  753.043421] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:08:39 alexandra-X542URR kernel: [  753.043432] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:08:39 alexandra-X542URR kernel: [  753.043434] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:08:39 alexandra-X542URR kernel: [  753.043436] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:08:39 alexandra-X542URR kernel: [  753.043438] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:09:10 alexandra-X542URR kernel: [  784.269058] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:09:10 alexandra-X542URR kernel: [  784.269071] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:09:10 alexandra-X542URR kernel: [  784.269073] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:09:10 alexandra-X542URR kernel: [  784.269075] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:09:10 alexandra-X542URR kernel: [  784.269077] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:09:23 alexandra-X542URR kernel: [  796.704570] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:09:23 alexandra-X542URR kernel: [  796.704580] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:09:23 alexandra-X542URR kernel: [  796.704583] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:09:23 alexandra-X542URR kernel: [  796.704585] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:09:23 alexandra-X542URR kernel: [  796.704587] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:10:11 alexandra-X542URR kernel: [  844.669141] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:10:11 alexandra-X542URR kernel: [  844.669153] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Transmitter ID)
+Apr 25 16:10:11 alexandra-X542URR kernel: [  844.669156] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001080/00006000
+Apr 25 16:10:11 alexandra-X542URR kernel: [  844.669158] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:10:11 alexandra-X542URR kernel: [  844.669160] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:10:36 alexandra-X542URR kernel: [  870.261462] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:10:36 alexandra-X542URR kernel: [  870.261474] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 16:10:36 alexandra-X542URR kernel: [  870.261476] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 16:10:36 alexandra-X542URR kernel: [  870.261479] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:10:36 alexandra-X542URR kernel: [  870.261481] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:10:36 alexandra-X542URR kernel: [  870.261483] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:10:39 alexandra-X542URR kernel: [  873.100123] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:10:39 alexandra-X542URR kernel: [  873.100135] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:10:39 alexandra-X542URR kernel: [  873.100137] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:10:39 alexandra-X542URR kernel: [  873.100140] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:11:32 alexandra-X542URR systemd[1]: Starting Cleanup of Temporary Directories...
+Apr 25 16:11:32 alexandra-X542URR systemd[1]: systemd-tmpfiles-clean.service: Deactivated successfully.
+Apr 25 16:11:32 alexandra-X542URR systemd[1]: Finished Cleanup of Temporary Directories.
+Apr 25 16:13:04 alexandra-X542URR kernel: [ 1018.243843] pcieport 0000:00:1c.5: AER: Corrected error received: 0000:03:00.0
+Apr 25 16:13:04 alexandra-X542URR kernel: [ 1018.243853] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:13:04 alexandra-X542URR kernel: [ 1018.243856] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000001/00006000
+Apr 25 16:13:04 alexandra-X542URR kernel: [ 1018.243859] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:13:16 alexandra-X542URR kernel: [ 1030.284213] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:13:16 alexandra-X542URR kernel: [ 1030.284227] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Receiver ID)
+Apr 25 16:13:16 alexandra-X542URR kernel: [ 1030.284229] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000081/00006000
+Apr 25 16:13:16 alexandra-X542URR kernel: [ 1030.284232] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:13:16 alexandra-X542URR kernel: [ 1030.284234] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:17:02 alexandra-X542URR CRON[4449]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Apr 25 16:26:47 alexandra-X542URR NetworkManager[909]: <info>  [1714051607.9449] dhcp4 (wlp3s0): state changed new lease, address=192.168.110.114
+Apr 25 16:34:03 alexandra-X542URR systemd[1]: Started Run anacron jobs.
+Apr 25 16:34:04 alexandra-X542URR anacron[4465]: Anacron 2.3 started on 2024-04-25
+Apr 25 16:34:05 alexandra-X542URR anacron[4465]: Normal exit (0 jobs run)
+Apr 25 16:34:05 alexandra-X542URR systemd[1]: anacron.service: Deactivated successfully.
+Apr 25 16:40:48 alexandra-X542URR up: Mirror created
+Apr 25 16:40:48 alexandra-X542URR up: Fetching latest changes for mirror...
+Apr 25 16:40:54 alexandra-X542URR up: Mirror 'linux' updated successfully.
+Apr 25 16:40:54 alexandra-X542URR up: Cloning repository...
+Apr 25 16:41:44 alexandra-X542URR kernel: [ 2738.024828] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:41:44 alexandra-X542URR kernel: [ 2738.024843] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:41:44 alexandra-X542URR kernel: [ 2738.024845] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:41:44 alexandra-X542URR kernel: [ 2738.024847] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:41:45 alexandra-X542URR kernel: [ 2738.787896] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:41:45 alexandra-X542URR kernel: [ 2738.787907] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Data Link Layer, (Receiver ID)
+Apr 25 16:41:45 alexandra-X542URR kernel: [ 2738.787909] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00000080/00006000
+Apr 25 16:41:45 alexandra-X542URR kernel: [ 2738.787912] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:41:46 alexandra-X542URR kernel: [ 2739.890771] pcieport 0000:00:1c.5: AER: Multiple Corrected error received: 0000:03:00.0
+Apr 25 16:41:46 alexandra-X542URR kernel: [ 2739.890782] ath10k_pci 0000:03:00.0: PCIe Bus Error: severity=Corrected, type=Physical Layer, (Transmitter ID)
+Apr 25 16:41:46 alexandra-X542URR kernel: [ 2739.890785] ath10k_pci 0000:03:00.0:   device [168c:0042] error status/mask=00001081/00006000
+Apr 25 16:41:46 alexandra-X542URR kernel: [ 2739.890787] ath10k_pci 0000:03:00.0:    [ 0] RxErr                  (First)
+Apr 25 16:41:46 alexandra-X542URR kernel: [ 2739.890789] ath10k_pci 0000:03:00.0:    [ 7] BadDLLP               
+Apr 25 16:41:46 alexandra-X542URR kernel: [ 2739.890791] ath10k_pci 0000:03:00.0:    [12] Timeout               
+Apr 25 16:42:18 alexandra-X542URR up: Mirror created
+Apr 25 16:42:18 alexandra-X542URR up: Fetching latest changes for mirror...
+Apr 25 16:42:19 alexandra-X542URR up: Mirror 'glibc' updated successfully.
+Apr 25 16:42:19 alexandra-X542URR up: System update complete!
+Apr 25 16:42:19 alexandra-X542URR up: Script ended.
+
+
+Test with mirrors present:
+
+alexandra@alexandra-X542URR:~$ ./up.sh
+Hit:1 https://download.docker.com/linux/ubuntu jammy InRelease
+Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Hit:3 https://packages.microsoft.com/repos/code stable InRelease               
+Hit:4 http://ro.archive.ubuntu.com/ubuntu jammy InRelease                      
+Get:5 http://ro.archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
+Hit:6 http://ro.archive.ubuntu.com/ubuntu jammy-backports InRelease 
+Fetched 229 kB in 1s (239 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+3 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Calculating upgrade... Done
+Get more security updates through Ubuntu Pro with 'esm-apps' enabled:
+  libpostproc55 libavcodec58 libavutil56 python3-git libswscale5
+  libswresample3 libavformat58 libavfilter7
+Learn more about Ubuntu Pro at https://ubuntu.com/pro
+The following packages have been kept back:
+  python3-update-manager update-manager update-manager-core
+0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+Fetching origin
+Fetching origin
+alexandra@alexandra-X542URR:~$ tail -n 50 /var/log/syslog
+Apr 25 17:15:56 alexandra-X542URR systemd[2099]: Started Tracker metadata extractor.
+Apr 25 17:16:04 alexandra-X542URR up: Script started.
+Apr 25 17:16:04 alexandra-X542URR up: Checking network connectivity...
+Apr 25 17:16:05 alexandra-X542URR up: Network is up.
+Apr 25 17:16:05 alexandra-X542URR up: Updating package lists...
+Apr 25 17:16:05 alexandra-X542URR systemd[1]: Starting Update APT News...
+Apr 25 17:16:05 alexandra-X542URR systemd[1]: Starting Update the local ESM caches...
+Apr 25 17:16:05 alexandra-X542URR systemd[1]: apt-news.service: Deactivated successfully.
+Apr 25 17:16:05 alexandra-X542URR systemd[1]: Finished Update APT News.
+Apr 25 17:16:06 alexandra-X542URR systemd[1]: esm-cache.service: Deactivated successfully.
+Apr 25 17:16:06 alexandra-X542URR systemd[1]: Finished Update the local ESM caches.
+Apr 25 17:16:13 alexandra-X542URR up: exit code 0
+Apr 25 17:16:13 alexandra-X542URR up: Upgrading installed packages...
+Apr 25 17:16:13 alexandra-X542URR up: exit code 0
+Apr 25 17:16:13 alexandra-X542URR up: Cleaning up...
+Apr 25 17:16:14 alexandra-X542URR up: exit code 0
+Apr 25 17:16:14 alexandra-X542URR up: Fetching latest changes for mirror...
+Apr 25 17:16:16 alexandra-X542URR rtkit-daemon[1275]: Supervising 7 threads of 4 processes of 2 users.
+Apr 25 17:16:16 alexandra-X542URR rtkit-daemon[1275]: Supervising 7 threads of 4 processes of 2 users.
+Apr 25 17:16:17 alexandra-X542URR up: Mirror 'linux' updated successfully.
+Apr 25 17:16:17 alexandra-X542URR up: Fetching latest changes for mirror...
+Apr 25 17:16:18 alexandra-X542URR up: Mirror 'glibc' updated successfully.
+Apr 25 17:16:18 alexandra-X542URR up: System update complete!
+Apr 25 17:16:18 alexandra-X542URR up: Script ended.
+
